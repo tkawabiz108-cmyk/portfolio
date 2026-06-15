@@ -1,0 +1,802 @@
+@charset "UTF-8";
+
+/* 全体の基本設定 */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+/* 👇 全要素のサイズ計算を直感的にする（パディングや線の太さを幅に含める） */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 👇 画像の下に生まれる謎の隙間（数ピクセル）を完全に消す */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* 👇 リンクの下線を一括で消す（毎回 text-decoration: none を書く手間を省く） */
+a {
+    text-decoration: none;
+    color: inherit; /* 親の文字色を引き継ぐ */
+}
+
+/* ==========================================
+   NAV（ナビゲーションバー）のスタイル
+   ========================================== */
+.navbar {
+    position: sticky;      /* 画面上部に張り付く設定 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;         /* 他の要素より手前に表示 */
+}
+
+.nav-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex;
+    justify-content: space-between; /* ロゴを左、メニューを右に割振 */
+    align-items: center;
+}
+
+.nav-logo a {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;         /* メメニューを横並びにする */
+    gap: 1.5rem;           /* メニュー間の余白 */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555555;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease; /* ホバー時の色の変化を滑らかに */
+}
+
+/* マウスを乗せた（ホバー）時の色 */
+.nav-links a:hover {
+    color: #2c3e50;
+}
+
+/* スムーズスクロールの設定 */
+html {
+    scroll-behavior: smooth; /* リンクをクリックした時に滑らかにスクロールする */
+    scroll-padding-top: 80px; /* 固定ナビの高さ分、スクロール位置を下にずらすバグ回避 */
+}
+
+/* ヘッダー（一番上の帯） */
+header {
+    background: #0f375f; 
+    color: #ffffff;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* ==========================================
+   メインビジュアル（2列表示レイアウト）
+   ========================================== */
+.profile-hero {
+    display: flex;
+    flex-wrap: wrap; /* スマホ表示で行を折り返せるようにする */
+    background-color: #e6e6e6; /* 画像のような薄いグレーの背景 */
+    padding: 0; /* 隙間をなくすためにパディングをリセット */
+    text-align: left; /* 左詰めに変更 */
+    min-height: 500px; /* 全体の最低限の高さ */
+}
+
+/* 左側：写真のボックス（幅50%） */
+.hero-image {
+    flex: 1;
+    min-width: 300px; /* スマホで潰れないように最低幅を設定 */
+    background-color: #d1cbd4; /* 画像の背景に近いニュアンスカラー */
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end; /* 画像を下揃えに */
+    justify-content: center;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ボックスのサイズに合わせて画像を綺麗に収める */
+    display: block;
+}
+
+/* 右側：テキストのボックス（幅50%） */
+.hero-text {
+    flex: 1;
+    min-width: 300px;
+    background-color: #e6e6e6; /* 薄いグレー */
+    display: flex;
+    align-items: center; /* 中の文字を上下中央に配置 */
+    justify-content: center; /* 中の文字を左右中央に配置 */
+    padding: 3rem;
+}
+
+/* 🔥 メインキャッチコピーの文字デザイン */
+.hero-catch {
+    font-size: 1.25rem;
+    font-weight: bold;
+    line-height: 1.8;
+    color: #2c3e50; /* 知的な印象を与えるダークネイビー */
+    text-align: left;
+    border-left: 4px solid #2c3e50; /* 左側にシャープなアクセント線 */
+    padding-left: 15px;
+    letter-spacing: 0.03em;
+    margin: 0 auto 2rem auto;
+}
+
+/* テキストの配置を整えるインナー枠 */
+.text-inner {
+    max-width: 400px;
+    width: 100%;
+}
+
+/* ふりがな（ルビ） */
+.ruby {
+    font-size: 0.8rem;
+    letter-spacing: 0.5em;
+    margin-bottom: 0.2rem;
+    color: #333;
+}
+
+/* メメインの名前 */
+.name {
+    font-family: 'Yuji Mai', 'Hiragino Mincho ProN', 'MS Mincho', serif;
+    font-size: 3.5rem; /* 大きめの太文字 */
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    color: #000000;
+}
+
+/* 肩書・所属などのサブテキスト */
+.sub-text {
+    font-size: 1.1rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* お問い合わせボタン */
+.btn-contact {
+    display: inline-block;
+    background-color: #2c3e50;
+    color: #ffffff;
+    padding: 0.8rem 2.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+}
+
+.btn-contact:hover {
+    background-color: #305476;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
+}
+
+/* ボタン内の矢印 */
+.btn-contact .arrow {
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* コンテンツを中央に寄せる枠 */
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* 各セクションの間隔 */
+section {
+    margin-bottom: 4rem;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 見出しの線 */
+h2 {
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+/* --- Aboutセクションの特別スタイリング --- */
+.about-lead {
+    text-align: center;      /* キャッチコピーを中央揃えにして目立たせる */
+    margin-bottom: 2.5rem;
+}
+
+.catchphrase {
+    font-size: 1.4rem;       /* 文字を少し大きめに */
+    font-weight: bold;
+    color: #2c3e50;          /* テーマカラーのネイビー */
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    padding: 1.5rem;
+    background: #f8f9fa;     /* キャッチコピーの背景に薄いグレーを敷く */
+    border-left: 5px solid #2c3e50; /* 左側にアクセントの太線を入れる */
+    display: inline-block;   /* 幅を文字に合わせる */
+    text-align: left;        /* 中身の文字は左揃え */
+    border-radius: 0 8px 8px 0;
+}
+
+.about-story {
+    max-width: 800px;
+    margin: 0 auto;          /* 文章を中央に寄せて読みやすく */
+}
+
+.about-story p {
+    font-size: 1.05rem;
+    line-height: 1.8;        /* 長文は少し行間を広げると劇的に読みやすくなります */
+    color: #333333;
+    margin-bottom: 1.5rem;
+}
+
+/* スマホ表示用の微調整（画面が狭いときはキャッチコピーの改行を有効に） */
+@media (max-width: 768px) {
+    .catchphrase {
+        font-size: 1.15rem;
+        padding: 1rem;
+    }
+    .sp-only {
+        display: block;
+    }
+}
+@media (min-width: 769px) {
+    .sp-only {
+        display: none;
+    }
+}
+
+/* スキルリストの調整 */
+ul {
+    padding-left: 1.2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* ==========================================
+   実績（Works）の2段組レイアウト設定
+   ========================================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2.5rem; /* 縦長画像を際立たせるため、少し隙間を広げて余裕を持たせました */
+    margin-top: 1.5rem;
+}
+
+/* 実績カードのデザイン */
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden; /* 画像の角丸をカードの角丸に合わせる */
+    position: relative; /* リンクボタンおよび擬似要素の基準となる設定 */
+    padding-bottom: 4.5rem; /* 下部ボタンがテキストに被らないように余白を固定 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* カードにマウスを乗せた時に少し浮き上がらせる */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ★超重要：追加された縦長画像の表示エリア */
+.card-img {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* チラシやポスターが完璧に収まる「横3 : 縦4」の黄金比に固定 */
+    overflow: hidden;
+    background-color: #eee; /* 画像がない時の仮のグレー背景 */
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像の縦横比を一切崩さずに枠内にトリミング充填 */
+    transition: transform 0.4s ease;
+}
+
+/* カードをホバーした時に画像も少しスムーズにズームアップさせる演出 */
+.card:hover .card-img img {
+    transform: scale(1.04);
+}
+
+/* カード内のテキスト余白調整 */
+.card-content {
+    padding: 1.5rem;
+}
+
+.card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.25rem;
+}
+
+.card-role {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+/* リンクボタンのスタイル ＆ ★カード全体への拡張★ */
+.btn-detail {
+    position: absolute;   /* カード内での絶対配置 */
+    bottom: 1.5rem;       /* 下から1.5remの位置に固定 */
+    right: 1.5rem;        /* 右から1.5remの位置に固定 */
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background-color: #2c3e50; /* ナビバーと同じネイビー */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    z-index: 2; /* 擬似要素よりも前面に出してホバーを有効化 */
+}
+
+/* ボタンにマウスを乗せたとき */
+.btn-detail:hover {
+    background-color: #34495e; /* 少し明るいネイビーに変化 */
+}
+
+/* 【重要】このCSSがリンクをカード全体に広げる魔法です */
+.btn-detail::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* ボタンの位置からカード全体まで透明な膜を逆算して広げる計算 */
+    margin-top: calc(-1 * (100% + 5rem)); 
+    margin-right: -1.5rem;
+    margin-bottom: -1.5rem;
+    margin-left: calc(-1 * (100% + 5rem));
+    width: 2000px;
+    height: 2000px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 1; /* カード全体を透明なリンクの膜で覆う */
+}
+
+/* ==========================================
+   FOOTER（フッター）のスタイル
+   ========================================== */
+footer {
+    background-color: #2c3e50; 
+    color: #ffffff;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 5rem; /* 上のコンテンツとの間にしっかり余白をとる */
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: 0.05em;
+}
+
+/* フッター内のミニメニュー */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem; /* メニュー間の広さ */
+}
+
+.footer-links a {
+    color: #b0bec5; /* 少し不透明度を下げた文字色 */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+/* マウスを乗せた時 */
+.footer-links a:hover {
+    color: #ffffff; /* 白く光るように変更 */
+}
+
+/* コピーライト（一番下の小さな文字） */
+.copyright {
+    font-size: 0.8rem;
+    color: #78909c; /* さらに薄いグレー */
+    margin: 0;
+    border-top: 1px solid #34495e; /* フッター内に薄い区切り線を入れる */
+    padding-top: 1.5rem;
+}
+
+/* ==========================================
+   職務経歴エリア（Career / Qualifications）の調整
+   ========================================== */
+.career-summary {
+    max-width: 800px;
+    margin: 4rem auto 0 auto;
+    padding-top: 3rem;
+    border-top: 1px dashed #e0e0e0; /* About Meとの区切り */
+}
+
+.career-summary h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #2c3e50;
+    padding-left: 10px;
+}
+
+/* タイムラインのデザイン */
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 3rem;
+}
+
+.timeline li {
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+}
+
+.year {
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+.timeline-detail {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.2rem 0 0 120px; /* 年数の幅に合わせてインデント */
+}
+
+/* 資格をチップ状に並べてスタイリッシュに */
+.qualifications {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.qualifications span {
+    background-color: #f0f2f5;
+    color: #2c3e50;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* ==========================================
+   WORKS DETAIL：実績詳細ページの共通設定
+   ========================================== */
+
+/* 詳細ページ全体の余白調整（ナビバーの下に綺麗に収める） */
+.work-detail-container {
+    margin-top: 5rem;
+    max-width: 800px; /* 文章を読みやすく、画像が大きすぎない絶妙な幅 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 担当領域などのメタ情報 */
+.work-meta {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+.work-meta p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+}
+
+/* ★超重要：画像を最も美しく見せるステージ枠（共通の土台） */
+.work-detail-display {
+    width: 100%;
+    background-color: #f5f5f5; /* 画像の背景に薄いグレーを敷いて引き締める */
+    border-radius: 8px;
+    padding: 2rem;             /* 画像の周りに少し余白を持たせてポスター感を演出 */
+    display: flex;
+    justify-content: center;   /* つねに画像を画面の真ん中に */
+    align-items: center;
+    box-sizing: border-box;
+    margin: 2.5rem 0;
+}
+
+/* ★魔法のレスポンシブ画像制御（ワーク1等、単体画像向けの初期値） */
+.work-detail-display img {
+    max-width: 100%;           /* 横幅は絶対に画面からはみ出さない */
+    max-height: 600px;         /* PCの大画面でもスクロールが大変にならない最大高さ */
+    height: auto;              /* 横幅に合わせて自動で『本来の比率』を維持（潰れない） */
+    width: auto;               /* 縦横比を完全に守る */
+    object-fit: contain;       /* 絶対にトリミングせず、全体を100%見せる */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); /* チラシが浮き出るようなリアルな影 */
+}
+
+/* 下部コンテンツの調整 */
+.work-detail-body h3 {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.work-detail-body p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333333;
+    margin-bottom: 1.5rem;
+}
+
+/* 詳細ページ用の「戻るボタン」 */
+.back-to-top {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 0.7rem 2rem;
+    background-color: #ffffff;
+    color: #2c3e50;
+    border: 2px solid #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #2c3e50;
+    color: #ffffff;
+}
+
+/* ==========================================
+   🔥 WORKS DETAIL：独立バナー・実績カード形式レイアウト（ワーク2専用）
+   ========================================== */
+
+/* カードを綺麗に並べるグリッド（PC・タブレットでは複数列、スマホは1列） */
+.work-card-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin: 3rem 0;
+}
+
+/* 1枚の独立した実績カード */
+.work-card-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* カード内の画像ステージ：画像が潰れない万能仕様を引き継ぎつつ最適化 */
+.work-card-item .work-detail-display {
+    margin: 0;
+    padding: 1.5rem;
+    background-color: #f8fafc; /* 少し明るい清潔感のあるグレーに変更 */
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 0;
+}
+
+.work-card-item .work-detail-display img {
+    max-height: 280px; /* バナーが並んだときに一番綺麗に見える高さに制限 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* カード内のテキスト解説エリア：全体の余白をキュッと詰めてスマートに */
+.work-card-info {
+    padding: 1.2rem 1.4rem; 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* 業界やジャンルを示すミニタグ：タイトルに寄せる微調整 */
+.work-card-tag {
+    align-self: flex-start;
+    font-size: 0.72rem;     
+    font-weight: bold;
+    color: #555555;
+    background-color: #edf2f7;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;  
+    letter-spacing: 0.03em;
+}
+
+/* バナーのタイトル：解説文に近づける微調整 */
+.work-card-title {
+    font-size: 1.05rem;     
+    color: #2c3e50;
+    margin: 0 0 0.6rem 0;   
+    line-height: 1.35;      
+    font-weight: 700;
+}
+
+/* ★解説文（キャプション）：行間と文字間を詰めてプロの「塊感」を演出 */
+.work-card-text {
+    font-size: 0.85rem;     
+    line-height: 1.55;      /* ほんの少し行間を「寄せる」 */
+    letter-spacing: 0.02em; /* 文字の詰まり具合を美しく調整 */
+    color: #4e5a6a;         
+    margin: 0;
+}
+
+/* 横幅が狭いスマホでのグリッド微調整 */
+@media (max-width: 600px) {
+    .work-card-gallery {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+/* ※これより上の既存のPC用コードはそのまま維持してください※ */
+
+/* ==========================================
+   📱 スマートフォン・タブレット用のレスポンシブ対応
+   ========================================== */
+
+/* 1. カード全体のリンク拡大バグの修正（PC・スマホ共通の安全対策） */
+.card {
+    position: relative;
+}
+.btn-detail::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+}
+
+/* 2. タブレット・スマホ向けのブレイクポイント（768px以下） */
+@media (max-width: 768px) {
+    /* ナビゲーションの最適化（はみ出し・衝突防止） */
+    .nav-container {
+        padding: 0 1rem;
+    }
+    .nav-logo a {
+        font-size: 1.05rem;
+    }
+    .nav-links {
+        gap: 0.8rem; /* メニュー間の余白をギュッと凝縮 */
+    }
+    .nav-links a {
+        font-size: 0.85rem; /* スマホで1行に収まるサイズに */
+    }
+
+    /* メインビジュアルの縦一列化と写真の比率維持 */
+    .profile-hero {
+        flex-direction: column; /* 確実に上・写真 / 下・テキストの順に */
+        min-height: auto;
+    }
+    .hero-image {
+        width: 100%;
+        min-width: 100%;
+        height: 320px; /* スマホ画面で顔が綺麗に収まる高さに固定 */
+    }
+    .hero-text {
+        width: 100%;
+        min-width: 100%;
+        padding: 2rem 1.5rem; /* スマホに合わせて余白をコンパクトに */
+        box-sizing: border-box;
+    }
+    .name {
+        font-size: 2.8rem; /* 名前がスマホで画面外に割れないサイズ */
+    }
+    .hero-catch {
+        font-size: 1.1rem;
+        padding-left: 10px;
+    }
+
+    /* セクション全体の余白調整 */
+    .container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+    section {
+        padding: 1.5rem 1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* 職務経歴（タイムライン）の縦並び化（文字潰れ防止） */
+    .timeline li {
+        margin-bottom: 1.8rem;
+    }
+    .year {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.3rem;
+        font-size: 0.95rem;
+    }
+    .timeline-detail {
+        margin-left: 0; /* 左側の固定マージンを解除して全幅を使う */
+        font-size: 0.85rem;
+    }
+
+    /* 資格（チップ）のスマホ対応 */
+    .qualifications {
+        gap: 0.5rem;
+    }
+    .qualifications span {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* フッターメニューの調整 */
+    .footer-links {
+        gap: 1.2rem;
+    }
+    .footer-links a {
+        font-size: 0.85rem;
+    }
+}
+
+/* 3. 超小型スマホ（横幅480px以下）のWorks調整 */
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr; /* カードを強制的に1列にしてチラシ画像を大きく魅せる */
+        gap: 1.5rem;
+    }
+    .card-img {
+        aspect-ratio: 3 / 4; /* スマホでも黄金比を絶対維持 */
+    }
+}
+/* お問い合わせのアドレスリンクの見た目を整える */
+.email-link {
+    color: #2c3e50; /* テーマカラーのネイビーにする */
+    text-decoration: underline; /* リンクだと分かりやすいように下線をつける */
+    font-weight: bold;
+}
+.email-link:hover {
+    color: #34495e; /* マウスを乗せたときに少し明るく */
+}
